@@ -1,21 +1,29 @@
 import { Todo } from '@/types';
 import { CheckIcon, MixerVerticalIcon, PlusIcon } from '@radix-ui/react-icons';
 import { Button, Dialog, Popover, TextField, Theme } from '@radix-ui/themes';
-import Link from 'next/link';
 import { TodoCard } from './todo-card';
+import { getAppInfo } from './actions';
 
 export default async function page(
   props: { searchParams: Promise<{ status: string | undefined, search: string | undefined }> }
 ) {
   const searchParams = await props.searchParams;
+  const app = await getAppInfo();
 
   const { status, search } = searchParams;
 
-  const todos:Todo[] = []
+  const todos:Todo[] = await fetch(`https://edtech-todo.vercel.app/api/todos`).then(res => res.json());
 
   return (
     <div className='space-y-4'>
-      <h1 className='text-4xl font-bold'>Todo App</h1>
+      <div className='space-y-2'>
+        <h1 className='text-4xl font-bold'>
+          {app.name}
+        </h1>
+        <p className='text-lg text-slate-400'>
+          {app.description}
+        </p>
+      </div>
       <div className='flex gap-4 items-center'>
         <Theme radius="medium">
           <TextField.Root name='search' size="3" placeholder="Search by name..." defaultValue={search}>
@@ -61,15 +69,15 @@ export default async function page(
           </Popover.Trigger>
           <Popover.Content>
             <div className='space-y-2'>
-              <Link className={'flex gap-2 items-center transition-all duration-1000 ' + (!status || status === "" ? "group active text-blue-600" : "text-slate-400")} href='/'>
+              <span className={'flex gap-2 items-center transition-all duration-1000 ' + (!status || status === "" ? "group active text-blue-600" : "text-slate-400")}>
                 <CheckIcon className='w-4 h-4 group-[.active]:inline-block hidden transition-all duration-500' /> All Todos
-              </Link>
-              <Link className={'flex gap-2 items-center transition-all duration-1000 ' + (status === "completed" ? "group active text-blue-600" : "text-slate-400")} href='?status=completed'>
+              </span>
+              <span className={'flex gap-2 items-center transition-all duration-1000 ' + (status === "completed" ? "group active text-blue-600" : "text-slate-400")} >
                 <CheckIcon className='w-4 h-4 group-[.active]:inline-block hidden transition-all duration-500' /> Completed
-              </Link>
-              <Link className={'flex gap-2 items-center transition-all duration-1000 ' + (status === "in-progress" ? "group active text-blue-600" : "text-slate-400")} href='?status=in-progress'>
+              </span>
+              <span className={'flex gap-2 items-center transition-all duration-1000 ' + (status === "in-progress" ? "group active text-blue-600" : "text-slate-400")}>
                 <CheckIcon className='w-4 h-4 group-[.active]:inline-block hidden transition-all duration-500' /> In Progress
-              </Link>
+              </span>
             </div>
           </Popover.Content>
         </Popover.Root>
