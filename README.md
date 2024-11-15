@@ -54,9 +54,6 @@ This project is a simple To-Do application built for testing essential interacti
   }
 
 
-
-
-
 ## AUTHORS
-- **[Joe Watson SBF](@joe-watson-sbf)**
-- **[John Cosky](@john6847)**
+- **[Joe Watson SBF](https://github.com/joe-watson-sbf)**
+- **[John Cosky](https://github.com/john6847)**
