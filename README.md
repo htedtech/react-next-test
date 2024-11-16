@@ -30,6 +30,8 @@ This project is a simple To-Do application built for testing essential interacti
 
 **Base URL:** `https://edtech-todo.vercel.app/api`
 
+- **Get User/Author Details:** `GET /users/"<user_id>"`  
+
 - **Get All To-Dos:** `GET /todos`  
   Retrieve a list of all to-dos.
 
